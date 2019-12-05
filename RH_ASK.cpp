@@ -3,6 +3,8 @@
 // Copyright (C) 2014 Mike McCauley
 // $Id: RH_ASK.cpp,v 1.22 2018/02/11 23:57:18 mikem Exp $
 
+#ifndef AM_PART_APOLLO3
+
 #include <RH_ASK.h>
 #include <RHCRC.h>
 #ifndef __SAMD51__
@@ -867,3 +869,5 @@ void INTERRUPT_ATTR RH_ASK::handleTimerInterrupt()
 }
 
 #endif
+
+#endif // AM_PART_APOLLO3

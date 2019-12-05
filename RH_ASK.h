@@ -6,6 +6,8 @@
 #ifndef RH_ASK_h
 #define RH_ASK_h
 
+#ifndef AM_PART_APOLLO3
+
 #include <RHGenericDriver.h>
 
 // Maximum message length (including the headers, byte count and FCS) we are willing to support
@@ -429,4 +431,6 @@ protected:
 /// @example ask_reliable_datagram_server.pde
 /// @example ask_transmitter.pde
 /// @example ask_receiver.pde
+#endif
+
 #endif

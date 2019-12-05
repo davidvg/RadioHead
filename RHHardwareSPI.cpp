@@ -1,8 +1,12 @@
-// RHHardwareSPI.cpp
-// Author: Mike McCauley (mikem@airspayce.com)
-// Copyright (C) 2011 Mike McCauley
-// Contributed by Joanna Rutkowska
-// $Id: RHHardwareSPI.cpp,v 1.20 2018/02/11 23:57:18 mikem Exp $
+/*
+ * RHHardwareSPI.cpp
+ * Author: Mike McCauley (mikem@airspayce.com)
+ * Copyright (C) 2011 Mike McCauley
+ * Contributed by Joanna Rutkowska
+ * Contributed by David Vazquez Garcia
+ *
+ * Code adaptation for the Ambiq Apollo3 MCU
+ */
 
 #include <RHHardwareSPI.h>
 
@@ -74,7 +78,7 @@ void RHHardwareSPI::begin()
    else
        frequency = 1000000;
 
-#if ((RH_PLATFORM == RH_PLATFORM_ARDUINO) && defined (__arm__) && (defined(ARDUINO_SAM_DUE) || defined(ARDUINO_ARCH_SAMD))) || defined(NRF52) || defined(ARDUINO_ARCH_STM32F1) || defined(ARDUINO_ARCH_STM32F4) || defined(ARDUINO_ARCH_ARDUINO_CORE_STM32)
+#if ((RH_PLATFORM == RH_PLATFORM_ARDUINO) && defined (__arm__) && (defined(ARDUINO_SAM_DUE) || defined(ARDUINO_ARCH_SAMD))) || defined(NRF52) || defined(ARDUINO_ARCH_STM32F1) || defined(ARDUINO_ARCH_STM32F4) || defined(ARDUINO_ARCH_ARDUINO_CORE_STM32) || defined(AM_PART_APOLLO3)
     // Arduino Due in 1.5.5 has its own BitOrder :-(
     // So too does Arduino Zero
     // So too does rogerclarkmelbourne/Arduino_STM32
