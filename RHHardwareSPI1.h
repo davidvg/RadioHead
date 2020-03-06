@@ -55,7 +55,11 @@ public:
     /// Initializes the SPI bus by setting SCK, MOSI, and SS to outputs, pulling SCK and MOSI low, and SS high. 
     void begin();
 
+<<<<<<< HEAD
     // Disables the SPI bus (leaving pin modes unchanged). 
+=======
+    /// Disables the SPI bus (leaving pin modes unchanged). 
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
     /// Call this after you have finished using the SPI interface.
     void end();
 #else

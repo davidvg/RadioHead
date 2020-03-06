@@ -44,20 +44,32 @@ RHHardwareSPI1::RHHardwareSPI1(Frequency frequency, BitOrder bitOrder, DataMode 
 
 uint8_t RHHardwareSPI1::transfer(uint8_t data)
 {
+<<<<<<< HEAD
     return SPI.transfer(data);
+=======
+    return SPI1.transfer(data);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 }
 
 void RHHardwareSPI1::attachInterrupt()
 {
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO || RH_PLATFORM == RH_PLATFORM_NRF52)
+<<<<<<< HEAD
     SPI.attachInterrupt();
+=======
+    SPI1.attachInterrupt();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 #endif
 }
 
 void RHHardwareSPI1::detachInterrupt()
 {
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO || RH_PLATFORM == RH_PLATFORM_NRF52)
+<<<<<<< HEAD
     SPI.detachInterrupt();
+=======
+    SPI1.detachInterrupt();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 #endif
 }
     
@@ -106,7 +118,11 @@ void RHHardwareSPI1::begin()
 
     // Save the settings for use in transactions
    _settings = SPISettings(frequency, bitOrder, dataMode);
+<<<<<<< HEAD
    SPI.begin();
+=======
+   SPI1.begin();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
 #else // SPI_HAS_TRANSACTION
 
@@ -129,10 +145,17 @@ void RHHardwareSPI1::begin()
 #else
  #if ((RH_PLATFORM == RH_PLATFORM_ARDUINO) && defined (__arm__) && defined(ARDUINO_ARCH_SAMD)) || defined(NRF52)
     // Zero requires begin() before anything else :-)
+<<<<<<< HEAD
     SPI.begin();
  #endif
 
     SPI.setDataMode(dataMode);
+=======
+    SPI1.begin();
+ #endif
+
+    SPI1.setDataMode(dataMode);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 #endif
 
 #if ((RH_PLATFORM == RH_PLATFORM_ARDUINO) && defined (__arm__) && (defined(ARDUINO_SAM_DUE) || defined(ARDUINO_ARCH_SAMD))) || defined(NRF52) || defined (ARDUINO_ARCH_STM32F1) || defined(ARDUINO_ARCH_STM32F4)
@@ -147,7 +170,11 @@ void RHHardwareSPI1::begin()
 	bitOrder = LSBFIRST;
     else
 	bitOrder = MSBFIRST;
+<<<<<<< HEAD
     SPI.setBitOrder(bitOrder);
+=======
+    SPI1.setBitOrder(bitOrder);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
     uint8_t divider;
     switch (_frequency)
     {
@@ -185,10 +212,17 @@ void RHHardwareSPI1::begin()
 	    break;
 
     }
+<<<<<<< HEAD
     SPI.setClockDivider(divider);
     SPI.begin();
     // Teensy requires it to be set _after_ begin()
     SPI.setClockDivider(divider);
+=======
+    SPI1.setClockDivider(divider);
+    SPI1.begin();
+    // Teensy requires it to be set _after_ begin()
+    SPI1.setClockDivider(divider);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32) // Maple etc
     spi_mode dataMode;
@@ -235,7 +269,11 @@ void RHHardwareSPI1::begin()
 	    break;
 
     }
+<<<<<<< HEAD
     SPI.begin(frequency, bitOrder, dataMode);
+=======
+    SPI1.begin(frequency, bitOrder, dataMode);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32STD) // STM32F4 discovery
     uint8_t dataMode;
@@ -281,7 +319,11 @@ void RHHardwareSPI1::begin()
 	    break;
 
     }
+<<<<<<< HEAD
     SPI.begin(frequency, bitOrder, dataMode);
+=======
+    SPI1.begin(frequency, bitOrder, dataMode);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32F2) // Photon
     uint8_t dataMode;
@@ -295,16 +337,25 @@ void RHHardwareSPI1::begin()
 	dataMode = SPI_MODE3;
     else
 	dataMode = SPI_MODE0;
+<<<<<<< HEAD
     SPI.setDataMode(dataMode);
     if (_bitOrder == BitOrderLSBFirst)
 	SPI.setBitOrder(LSBFIRST);
     else
 	SPI.setBitOrder(MSBFIRST);
+=======
+    SPI1.setDataMode(dataMode);
+    if (_bitOrder == BitOrderLSBFirst)
+	SPI1.setBitOrder(LSBFIRST);
+    else
+	SPI1.setBitOrder(MSBFIRST);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
     switch (_frequency)
     {
 	case Frequency1MHz:
 	default:
+<<<<<<< HEAD
 	    SPI.setClockSpeed(1, MHZ);
 	    break;
 
@@ -322,24 +373,52 @@ void RHHardwareSPI1::begin()
 
 	case Frequency16MHz:
 	    SPI.setClockSpeed(16, MHZ);
+=======
+	    SPI1.setClockSpeed(1, MHZ);
+	    break;
+
+	case Frequency2MHz:
+	    SPI1.setClockSpeed(2, MHZ);
+	    break;
+
+	case Frequency4MHz:
+	    SPI1.setClockSpeed(4, MHZ);
+	    break;
+
+	case Frequency8MHz:
+	    SPI1.setClockSpeed(8, MHZ);
+	    break;
+
+	case Frequency16MHz:
+	    SPI1.setClockSpeed(16, MHZ);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 	    break;
     }
 
 //      SPI.setClockDivider(SPI_CLOCK_DIV4);  // 72MHz / 4MHz = 18MHz
 //      SPI.setClockSpeed(1, MHZ);
+<<<<<<< HEAD
       SPI.begin();
+=======
+      SPI1.begin();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
 #elif (RH_PLATFORM == RH_PLATFORM_ESP8266)
      // Requires SPI driver for ESP8266 from https://github.com/esp8266/Arduino/tree/master/libraries/SPI
      // Which ppears to be in Arduino Board Manager ESP8266 Community version 2.1.0
      // Contributed by David Skinner
      // begin comes first 
+<<<<<<< HEAD
      SPI.begin();
+=======
+     SPI1.begin();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
      // datamode
      switch ( _dataMode )
      { 
 	 case DataMode1:
+<<<<<<< HEAD
 	     SPI.setDataMode ( SPI_MODE1 );
 	     break;
 	 case DataMode2:
@@ -351,17 +430,35 @@ void RHHardwareSPI1::begin()
 	 case DataMode0:
 	 default:
 	     SPI.setDataMode ( SPI_MODE0 );
+=======
+	     SPI1.setDataMode ( SPI_MODE1 );
+	     break;
+	 case DataMode2:
+	     SPI1.setDataMode ( SPI_MODE2 );
+	     break;
+	 case DataMode3:
+	     SPI1.setDataMode ( SPI_MODE3 );
+	     break;
+	 case DataMode0:
+	 default:
+	     SPI1.setDataMode ( SPI_MODE0 );
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 	     break;
      }
 
      // bitorder
+<<<<<<< HEAD
      SPI.setBitOrder(_bitOrder == BitOrderLSBFirst ? LSBFIRST : MSBFIRST);
+=======
+     SPI1.setBitOrder(_bitOrder == BitOrderLSBFirst ? LSBFIRST : MSBFIRST);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 
      // frequency (this sets the divider)
      switch (_frequency)
      {
 	 case Frequency1MHz:
 	 default:
+<<<<<<< HEAD
 	     SPI.setFrequency(1000000);
 	     break;
 	 case Frequency2MHz:
@@ -375,6 +472,21 @@ void RHHardwareSPI1::begin()
 	     break;
 	 case Frequency16MHz:
 	     SPI.setFrequency(16000000);
+=======
+	     SPI1.setFrequency(1000000);
+	     break;
+	 case Frequency2MHz:
+	     SPI1.setFrequency(2000000);
+	     break;
+	 case Frequency4MHz:
+	     SPI1.setFrequency(4000000);
+	     break;
+	 case Frequency8MHz:
+	     SPI1.setFrequency(8000000);
+	     break;
+	 case Frequency16MHz:
+	     SPI1.setFrequency(16000000);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 	     break;
      }
 
@@ -415,7 +527,11 @@ void RHHardwareSPI1::begin()
       divider = BCM2835_SPI_CLOCK_DIVIDER_16;
       break;
   }
+<<<<<<< HEAD
   SPI.begin(divider, bitOrder, dataMode);
+=======
+  SPI1.begin(divider, bitOrder, dataMode);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 #else
  #warning RHHardwareSPI1 does not support this platform yet. Consider adding it and contributing a patch.
 #endif
@@ -425,20 +541,32 @@ void RHHardwareSPI1::begin()
 
 void RHHardwareSPI1::end()
 {
+<<<<<<< HEAD
     return SPI.end();
+=======
+    return SPI1.end();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 }
 
 void RHHardwareSPI1::beginTransaction()
 {
 #if defined(SPI_HAS_TRANSACTION)
+<<<<<<< HEAD
     SPI.beginTransaction(_settings);
+=======
+    SPI1.beginTransaction(_settings);
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 #endif
 }
 
 void RHHardwareSPI1::endTransaction()
 {
 #if defined(SPI_HAS_TRANSACTION)
+<<<<<<< HEAD
     SPI.endTransaction();
+=======
+    SPI1.endTransaction();
+>>>>>>> 627622be4e29c623859887af86d6626105f7f52f
 #endif
 }
 
