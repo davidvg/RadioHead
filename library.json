@@ -1,0 +1,11 @@
+{
+    "name": "RadioHead",
+    "version": "0.1",
+    "keyworks": "communications, radio",
+    "description": "Adaptation of the RadioHead library for the Apollo3 mcu",
+    "repository": 
+    {
+        "type": "git",
+        "url": "https://github.com/davidvg/RadioHead"
+    }
+}
