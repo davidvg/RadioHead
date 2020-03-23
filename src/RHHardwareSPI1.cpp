@@ -8,6 +8,8 @@
  * Code adaptation to use SPI1
  */
 
+#ifdef ARDUINO_SFE_ARTEMIS  // Only for SparkFun Artemis Module (not Nano nor ATP)
+
 #include <RHHardwareSPI1.h>
 
 // Declare a single default instance of the hardware SPI interface class
@@ -21,6 +23,10 @@ HardwareSPI SPI(1);
 #elif (RH_PLATFORM == RH_PLATFORM_STM32STD) // STM32F4 Discovery
 // Declare an SPI interface to use
 HardwareSPI SPI(1);
+
+#elif defined(ARDUINO_ARCH_APOLLO3)
+
+
 #endif
 
 // Arduino Due has default SPI pins on central SPI headers, and not on 10, 11, 12, 13
@@ -44,20 +50,20 @@ RHHardwareSPI1::RHHardwareSPI1(Frequency frequency, BitOrder bitOrder, DataMode 
 
 uint8_t RHHardwareSPI1::transfer(uint8_t data)
 {
-    return SPI.transfer(data);
+    return SPI1.transfer(data);
 }
 
 void RHHardwareSPI1::attachInterrupt()
 {
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO || RH_PLATFORM == RH_PLATFORM_NRF52)
-    SPI.attachInterrupt();
+    SPI1.attachInterrupt();
 #endif
 }
 
 void RHHardwareSPI1::detachInterrupt()
 {
 #if (RH_PLATFORM == RH_PLATFORM_ARDUINO || RH_PLATFORM == RH_PLATFORM_NRF52)
-    SPI.detachInterrupt();
+    SPI1.detachInterrupt();
 #endif
 }
     
@@ -106,7 +112,7 @@ void RHHardwareSPI1::begin()
 
     // Save the settings for use in transactions
    _settings = SPISettings(frequency, bitOrder, dataMode);
-   SPI.begin();
+   SPI1.begin();
 
 #else // SPI_HAS_TRANSACTION
 
@@ -129,10 +135,10 @@ void RHHardwareSPI1::begin()
 #else
  #if ((RH_PLATFORM == RH_PLATFORM_ARDUINO) && defined (__arm__) && defined(ARDUINO_ARCH_SAMD)) || defined(NRF52)
     // Zero requires begin() before anything else :-)
-    SPI.begin();
+    SPI1.begin();
  #endif
 
-    SPI.setDataMode(dataMode);
+    SPI1.setDataMode(dataMode);
 #endif
 
 #if ((RH_PLATFORM == RH_PLATFORM_ARDUINO) && defined (__arm__) && (defined(ARDUINO_SAM_DUE) || defined(ARDUINO_ARCH_SAMD))) || defined(NRF52) || defined (ARDUINO_ARCH_STM32F1) || defined(ARDUINO_ARCH_STM32F4)
@@ -147,7 +153,7 @@ void RHHardwareSPI1::begin()
 	bitOrder = LSBFIRST;
     else
 	bitOrder = MSBFIRST;
-    SPI.setBitOrder(bitOrder);
+    SPI1.setBitOrder(bitOrder);
     uint8_t divider;
     switch (_frequency)
     {
@@ -185,10 +191,10 @@ void RHHardwareSPI1::begin()
 	    break;
 
     }
-    SPI.setClockDivider(divider);
-    SPI.begin();
+    SPI1.setClockDivider(divider);
+    SPI1.begin();
     // Teensy requires it to be set _after_ begin()
-    SPI.setClockDivider(divider);
+    SPI1.setClockDivider(divider);
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32) // Maple etc
     spi_mode dataMode;
@@ -235,7 +241,7 @@ void RHHardwareSPI1::begin()
 	    break;
 
     }
-    SPI.begin(frequency, bitOrder, dataMode);
+    SPI1.begin(frequency, bitOrder, dataMode);
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32STD) // STM32F4 discovery
     uint8_t dataMode;
@@ -281,7 +287,7 @@ void RHHardwareSPI1::begin()
 	    break;
 
     }
-    SPI.begin(frequency, bitOrder, dataMode);
+    SPI1.begin(frequency, bitOrder, dataMode);
 
 #elif (RH_PLATFORM == RH_PLATFORM_STM32F2) // Photon
     uint8_t dataMode;
@@ -295,86 +301,86 @@ void RHHardwareSPI1::begin()
 	dataMode = SPI_MODE3;
     else
 	dataMode = SPI_MODE0;
-    SPI.setDataMode(dataMode);
+    SPI1.setDataMode(dataMode);
     if (_bitOrder == BitOrderLSBFirst)
-	SPI.setBitOrder(LSBFIRST);
+	SPI1.setBitOrder(LSBFIRST);
     else
-	SPI.setBitOrder(MSBFIRST);
+	SPI1.setBitOrder(MSBFIRST);
 
     switch (_frequency)
     {
 	case Frequency1MHz:
 	default:
-	    SPI.setClockSpeed(1, MHZ);
+	    SPI1.setClockSpeed(1, MHZ);
 	    break;
 
 	case Frequency2MHz:
-	    SPI.setClockSpeed(2, MHZ);
+	    SPI1.setClockSpeed(2, MHZ);
 	    break;
 
 	case Frequency4MHz:
-	    SPI.setClockSpeed(4, MHZ);
+	    SPI1.setClockSpeed(4, MHZ);
 	    break;
 
 	case Frequency8MHz:
-	    SPI.setClockSpeed(8, MHZ);
+	    SPI1.setClockSpeed(8, MHZ);
 	    break;
 
 	case Frequency16MHz:
-	    SPI.setClockSpeed(16, MHZ);
+	    SPI1.setClockSpeed(16, MHZ);
 	    break;
     }
 
-//      SPI.setClockDivider(SPI_CLOCK_DIV4);  // 72MHz / 4MHz = 18MHz
-//      SPI.setClockSpeed(1, MHZ);
-      SPI.begin();
+//      SPI1.setClockDivider(SPI_CLOCK_DIV4);  // 72MHz / 4MHz = 18MHz
+//      SPI1.setClockSpeed(1, MHZ);
+      SPI1.begin();
 
 #elif (RH_PLATFORM == RH_PLATFORM_ESP8266)
      // Requires SPI driver for ESP8266 from https://github.com/esp8266/Arduino/tree/master/libraries/SPI
      // Which ppears to be in Arduino Board Manager ESP8266 Community version 2.1.0
      // Contributed by David Skinner
      // begin comes first 
-     SPI.begin();
+     SPI1.begin();
 
      // datamode
      switch ( _dataMode )
      { 
 	 case DataMode1:
-	     SPI.setDataMode ( SPI_MODE1 );
+	     SPI1.setDataMode ( SPI_MODE1 );
 	     break;
 	 case DataMode2:
-	     SPI.setDataMode ( SPI_MODE2 );
+	     SPI1.setDataMode ( SPI_MODE2 );
 	     break;
 	 case DataMode3:
-	     SPI.setDataMode ( SPI_MODE3 );
+	     SPI1.setDataMode ( SPI_MODE3 );
 	     break;
 	 case DataMode0:
 	 default:
-	     SPI.setDataMode ( SPI_MODE0 );
+	     SPI1.setDataMode ( SPI_MODE0 );
 	     break;
      }
 
      // bitorder
-     SPI.setBitOrder(_bitOrder == BitOrderLSBFirst ? LSBFIRST : MSBFIRST);
+     SPI1.setBitOrder(_bitOrder == BitOrderLSBFirst ? LSBFIRST : MSBFIRST);
 
      // frequency (this sets the divider)
      switch (_frequency)
      {
 	 case Frequency1MHz:
 	 default:
-	     SPI.setFrequency(1000000);
+	     SPI1.setFrequency(1000000);
 	     break;
 	 case Frequency2MHz:
-	     SPI.setFrequency(2000000);
+	     SPI1.setFrequency(2000000);
 	     break;
 	 case Frequency4MHz:
-	     SPI.setFrequency(4000000);
+	     SPI1.setFrequency(4000000);
 	     break;
 	 case Frequency8MHz:
-	     SPI.setFrequency(8000000);
+	     SPI1.setFrequency(8000000);
 	     break;
 	 case Frequency16MHz:
-	     SPI.setFrequency(16000000);
+	     SPI1.setFrequency(16000000);
 	     break;
      }
 
@@ -415,7 +421,7 @@ void RHHardwareSPI1::begin()
       divider = BCM2835_SPI_CLOCK_DIVIDER_16;
       break;
   }
-  SPI.begin(divider, bitOrder, dataMode);
+  SPI1.begin(divider, bitOrder, dataMode);
 #else
  #warning RHHardwareSPI1 does not support this platform yet. Consider adding it and contributing a patch.
 #endif
@@ -425,20 +431,20 @@ void RHHardwareSPI1::begin()
 
 void RHHardwareSPI1::end()
 {
-    return SPI.end();
+    return SPI1.end();
 }
 
 void RHHardwareSPI1::beginTransaction()
 {
 #if defined(SPI_HAS_TRANSACTION)
-    SPI.beginTransaction(_settings);
+    SPI1.beginTransaction(_settings);
 #endif
 }
 
 void RHHardwareSPI1::endTransaction()
 {
 #if defined(SPI_HAS_TRANSACTION)
-    SPI.endTransaction();
+    SPI1.endTransaction();
 #endif
 }
 
@@ -449,4 +455,5 @@ void RHHardwareSPI1::usingInterrupt(uint8_t interrupt)
 #endif
 }
 
+#endif  // ARDUINO_SFE_ARTEMIS
 #endif

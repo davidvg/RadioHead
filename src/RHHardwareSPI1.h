@@ -11,6 +11,8 @@
 #ifndef RHHardwareSPI1_h
 #define RHHardwareSPI1_h
 
+#ifdef ARDUINO_SFE_ARTEMIS  // Only for SparkFun Artemis Module (not Nano nor ATP)
+
 #include <RHGenericSPI.h>
 
 /////////////////////////////////////////////////////////////////////
@@ -93,4 +95,5 @@ protected:
 // Built in default instance
 extern RHHardwareSPI1 hardware_spi1;
 
+#endif  // ARDUINO_SFE_ARTEMIS
 #endif
